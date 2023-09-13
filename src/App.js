@@ -51,7 +51,7 @@ async function createNote(event) {
     description: form.get("description"),
     image: image.name
   }
-  if (!!data.image) await StorageEvent.put(data.name, image);
+  if (!!data.image) await Storage.put(data.name, image);
   await API.graphql({
     query: createNoteMutation,
     variables: { input: data },
@@ -103,7 +103,7 @@ return (
       </Flex>
     </View>
     <View margin="3rem 0">
-      {notes.map((note) => {
+      {notes.map((note) => (
         <Flex key={note.id || note.name}
           direction = "row"
           justifyContent="center"
@@ -124,7 +124,7 @@ return (
             Delete Note
           </Button>
         </Flex>
-      })}
+    ))}
     </View>
     <View margin="3rem 0">
       <Button onClick={signOut}>
