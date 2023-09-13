@@ -12,6 +12,7 @@ import {
   TextField,
   View,
   withAuthenticator,
+  Authenticator,
 } from '@aws-amplify/ui-react';
 
 import { listTodos } from "./graphql/queries";
@@ -20,7 +21,7 @@ import {
   deleteTodo as deleteNoteMutation,
 } from "./graphql/mutations";
 
-const App = ({ signOut }) => {
+const App = ({ signOut, user }) => {
   const [notes, setNotes] = useState([])
   useEffect(() => {
     fetchNotes();
@@ -72,7 +73,8 @@ async function deleteNote({id, name }) {
 
 return (
   <View className="App">
-    <Heading level={1}>My Notes App</Heading>
+    <Heading level={1}>Hello, {user.username}!</Heading>
+    <Text>Welcome to your notes.</Text>
     <View as="form" margin="3rem 0" onSubmit={createNote}>
       <Flex direction="row" justifyContent="center">
         <TextField 
