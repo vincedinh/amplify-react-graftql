@@ -25,24 +25,24 @@ export default function TodoCreateForm(props) {
   const initialValues = {
     name: "",
     description: "",
-    date: "",
+    image: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [description, setDescription] = React.useState(
     initialValues.description
   );
-  const [date, setDate] = React.useState(initialValues.date);
+  const [image, setImage] = React.useState(initialValues.image);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
     setDescription(initialValues.description);
-    setDate(initialValues.date);
+    setImage(initialValues.image);
     setErrors({});
   };
   const validations = {
     name: [{ type: "Required" }],
     description: [],
-    date: [],
+    image: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -72,7 +72,7 @@ export default function TodoCreateForm(props) {
         let modelFields = {
           name,
           description,
-          date,
+          image,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -137,7 +137,7 @@ export default function TodoCreateForm(props) {
             const modelFields = {
               name: value,
               description,
-              date,
+              image,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -163,7 +163,7 @@ export default function TodoCreateForm(props) {
             const modelFields = {
               name,
               description: value,
-              date,
+              image,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -179,31 +179,30 @@ export default function TodoCreateForm(props) {
         {...getOverrideProps(overrides, "description")}
       ></TextField>
       <TextField
-        label="Date"
+        label="Image"
         isRequired={false}
         isReadOnly={false}
-        type="date"
-        value={date}
+        value={image}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
               name,
               description,
-              date: value,
+              image: value,
             };
             const result = onChange(modelFields);
-            value = result?.date ?? value;
+            value = result?.image ?? value;
           }
-          if (errors.date?.hasError) {
-            runValidationTasks("date", value);
+          if (errors.image?.hasError) {
+            runValidationTasks("image", value);
           }
-          setDate(value);
+          setImage(value);
         }}
-        onBlur={() => runValidationTasks("date", date)}
-        errorMessage={errors.date?.errorMessage}
-        hasError={errors.date?.hasError}
-        {...getOverrideProps(overrides, "date")}
+        onBlur={() => runValidationTasks("image", image)}
+        errorMessage={errors.image?.errorMessage}
+        hasError={errors.image?.hasError}
+        {...getOverrideProps(overrides, "image")}
       ></TextField>
       <Flex
         justifyContent="space-between"
