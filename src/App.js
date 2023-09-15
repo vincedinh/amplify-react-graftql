@@ -27,9 +27,7 @@ const App = ({ signOut, user }) => {
   }, []);
 
 async function fetchNotes() {
-  console.log("before API")
   const apiData = await API.graphql({ query: listTodos });
-  console.log("here")
   const notesFromAPI = apiData.data.listTodos.items;
   await Promise.all(
     notesFromAPI.map(async (note) => {
