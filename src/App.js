@@ -5,6 +5,7 @@ import "@aws-amplify/ui-react/styles.css"
 import { API, Storage } from 'aws-amplify';
 import {
   Button,
+  Divider,
   Flex,
   Heading,
   Image,
@@ -74,7 +75,7 @@ return (
   <View className="App">
     <Heading level={1}>Hello, {user.username}!</Heading>
     <Text>Welcome to your notes.</Text>
-    <View as="form" margin="3rem 0" onSubmit={createNote}>
+    <View as="form" margin="3em 0" onSubmit={createNote}>
       <Flex direction="row" justifyContent="center">
         <TextField 
           name="name"
@@ -92,34 +93,43 @@ return (
           variation="quiet"
           required
         />
-        <View
+      </Flex>
+      <View
           name="image"
           as="input"
           type="file"
           style={{ alignSelf: "end" }}
         />
-        <Button type="submit" variation="primary">
+      <Button margin="1em 0" type="submit" variation="primary">
           Create Note
         </Button>
-      </Flex>
     </View>
+    <Divider style={{width: '20%', margin: '0 auto'}}/>
     <View margin="3rem 0">
       {notes.map((note) => (
         <Flex key={note.id || note.name}
           direction = "row"
           justifyContent="center"
           alignItems="center"
+          margin="1em 0"
         >
-          <Text as="strong" fontWeight={700}>
-            {note.name}
-          </Text>
-          <Text as="span">{note.description}</Text>
+          <div style={{ width: '200px' }}>
+            <Text as="strong" fontWeight={700}>
+              {note.name}
+            </Text>
+          </div>
+          <div style={{ width: '200px' }}>
+            <Text as="span">{note.description}</Text>
+          </div>
           {note.image && (
             <Image
               src={note.image}
               alt={`visual aid for ${notes.name}`}
               style={{ width: 100 }}
             />
+          )}
+          {!note.image && (
+            <div style={{ width: 100 }}></div>
           )}
           <Button variation="link" onClick={()=>deleteNote(note)}>
             Delete Note
