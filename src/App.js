@@ -12,7 +12,6 @@ import {
   TextField,
   View,
   withAuthenticator,
-  Authenticator,
 } from '@aws-amplify/ui-react';
 
 import { listTodos } from "./graphql/queries";
@@ -28,7 +27,9 @@ const App = ({ signOut, user }) => {
   }, []);
 
 async function fetchNotes() {
+  console.log("before API")
   const apiData = await API.graphql({ query: listTodos });
+  console.log("here")
   const notesFromAPI = apiData.data.listTodos.items;
   await Promise.all(
     notesFromAPI.map(async (note) => {
@@ -40,7 +41,6 @@ async function fetchNotes() {
     })
   )
   setNotes(notesFromAPI);
-
 }
 
 async function createNote(event) {
@@ -53,6 +53,7 @@ async function createNote(event) {
     image: image.name
   }
   if (!!data.image) await Storage.put(data.name, image);
+  console.log()
   await API.graphql({
     query: createNoteMutation,
     variables: { input: data },
